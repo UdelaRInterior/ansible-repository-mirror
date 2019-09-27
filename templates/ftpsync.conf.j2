@@ -1,0 +1,49 @@
+########################################################################
+########################################################################
+## This is a sample configuration file for the ftpsync mirror script. ##
+## Only options most users may need are included.  For documentation  ##
+## and all available options see ftpsync.conf(5).                     ##
+########################################################################
+########################################################################
+
+MIRRORNAME='hostname -f'
+TO="{{mirror_base_path}}/{{mirror_debian_rsync_path}}/"
+
+########################################################################
+## Connection options
+########################################################################
+
+RSYNC_HOST="{{mirror_debian_rsync_host}}"
+RSYNC_PATH="{{mirror_debian_rsync_path}}"
+{% if mirror_debian_rsync_user %}
+RSYNC_USER="{{mirror_debian_rsync_user}}"
+RSYNC_PASSWORD="{{mirror_debian_rsync_password}}"
+{% endif %}
+########################################################################
+## Mirror information options
+########################################################################
+
+INFO_MAINTAINER="{{mirror_debian_info_maintainer}}"
+INFO_SPONSOR="{{mirror_debian_info_sponsor}}"
+INFO_COUNTRY="{{mirror_debian_info_country}}"
+INFO_LOCATION="{{mirror_debian_info_location}}"
+INFO_THROUGHPUT="{{mirror_debian_info_throughput}}"
+
+########################################################################
+## Include and exclude options
+########################################################################
+
+{% if mirror_debian_arch_include %}
+ARCH_INCLUDE="{{mirror_debian_arch_include}}"
+{% endif %}
+{% if mirror_debian_arch_exclude %}
+ARCH_EXCLUDE="{{mirror_debian_arch_exclude}}"
+{% endif %}
+
+########################################################################
+## Log option
+########################################################################
+
+{% if mirror_debian_logdir %}
+LOGDIR="{{mirror_debian_logdir}}"
+{% endif%}

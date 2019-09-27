@@ -1,0 +1,32 @@
+<VirtualHost *:80>
+  ServerName {{inventory_hostname}}
+{% if mirror_alias %}
+  ServerAlias {{mirror_alias}}
+{% endif %}
+
+  Alias /{{mirror_debian_rsync_path}} /var/www/html/mirror/{{mirror_debian_rsync_path}}/{{mirror_debian_rsync_path}}
+  Alias /{{mirror_debian_cd_rsync_path}} /var/www/html/mirror/{{mirror_debian_rsync_path}}/{{mirror_debian_cd_rsync_path}}
+  Alias /{{mirror_ubuntu_rsync_path}} /var/www/html/mirror/{{mirror_ubuntu_rsync_path}}/{{mirror_ubuntu_rsync_path}}
+  Alias /{{mirror_ubuntu_releases_rsync_path}} /var/www/html/mirror/{{mirror_ubuntu_rsync_path}}/{{mirror_ubuntu_releases_rsync_path}}
+
+</VirtualHost>
+
+{% if mirror_ssl %}
+<VirtualHost _default_:443>
+  ServerName https://{{inventory_hostname}}
+{% if mirror_alias %}
+  ServerAlias https://{{mirror_alias}}
+{% endif %}
+
+  Alias /{{mirror_debian_rsync_path}} /var/www/html/mirror/{{mirror_debian_rsync_path}}/{{mirror_debian_rsync_path}}
+  Alias /{{mirror_debian_cd_rsync_path}} /var/www/html/mirror/{{mirror_debian_rsync_path}}/{{mirror_debian_cd_rsync_path}}
+  Alias /{{mirror_ubuntu_rsync_path}} /var/www/html/mirror/{{mirror_ubuntu_rsync_path}}/{{mirror_ubuntu_rsync_path}}
+  Alias /{{mirror_ubuntu_releases_rsync_path}} /var/www/html/mirror/{{mirror_ubuntu_rsync_path}}/{{mirror_ubuntu_releases_rsync_path}}
+
+  DocumentRoot /var/www/html
+
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/{{ inventory_hostname }}/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem
+</VirtualHost>
+{% endif %}

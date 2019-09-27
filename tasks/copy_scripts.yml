@@ -1,0 +1,64 @@
+---
+
+- name: Create directory mirror
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{mirror_scripts_path}}/debian"
+    - "{{mirror_scripts_path}}/debian/debian"
+    - "{{mirror_scripts_path}}/debian/debian/etc"
+    - "{{mirror_scripts_path}}/debian/debian/bin"
+    - "{{mirror_scripts_path}}/debian/debian-cd"
+    - "{{mirror_scripts_path}}/debian/debian-cd/etc"
+    - "{{mirror_scripts_path}}/debian/debian-cd/bin"
+    - "{{mirror_scripts_path}}/ubuntu"
+
+- name: Template | repository Debian
+  template: 
+    src: ftpsync.conf.j2
+    dest: "{{mirror_scripts_path}}/debian/debian/etc/ftpsync.conf"
+    owner: root
+    mode: 0766
+
+- name: Template | repository Debian-cd
+  template: 
+    src: ftpsync-cd.conf.j2
+    dest: "{{mirror_scripts_path}}/debian/debian-cd/etc/ftpsync.conf"
+    owner: root
+    mode: 0766
+
+- name: Copy ftpsync
+  sudo: yes
+  copy:
+    src: "files/ftpsync/bin/ftpsync"
+    dest: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0766
+  with_items:
+    - "{{mirror_scripts_path}}/debian/debian/bin/ftpsync"
+    - "{{mirror_scripts_path}}/debian/debian-cd/bin/ftpsync"
+
+- name: Copy mirror.sh
+  template: 
+    src: mirror.sh.j2
+    dest: "{{mirror_scripts_path}}/mirror.sh"
+    owner: root
+    mode: 0766
+
+- name: Page init
+  template: 
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    mode: 0644
+
+- name: Copy image 
+  sudo: yes
+  copy:
+    src: "{{mirror_image_path}}/{{mirror_image}}"
+    dest: /var/www/html/{{mirror_image}}
+    owner: root
+    group: root
+    mode: 0644

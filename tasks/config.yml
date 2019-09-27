@@ -1,0 +1,56 @@
+---
+
+- name: Install apache2
+  apt: 
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - apache2
+
+- name: Enable module apache2
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rewrite
+    - ssl
+  notify: 
+    - restart_apache2
+  when: mirror_ssl
+
+- name: Config apache2
+  template: 
+    src: repos.conf.j2
+    dest: /etc/apache2/sites-available/repos.conf
+  notify: 
+    - restart_apache2
+
+- name: Enable site
+  file:
+    src: /etc/apache2/sites-available/repos.conf
+    dest: /etc/apache2/sites-enabled/repos.conf
+    state: link
+  notify: 
+    - restart_apache2
+
+- name: Setup base path
+  file:
+    path: /mnt/repos
+    recurse: yes
+    state: directory
+    owner: root
+
+- name: Create symbolic link 
+  file:
+    src: /mnt/repos
+    dest: /var/www/html/mirror
+    state: link
+
+- name: main | Cron job 
+  cron:
+    name: "Update mirror hour {{item}}"
+    day: "{{ mirror_cron_day }}"
+    hour: "{{ item }}"
+    job: "{{ mirror_bin_path }}"
+  when: mirror_cron
+  with_items: "{{mirror_cron_hour}}"

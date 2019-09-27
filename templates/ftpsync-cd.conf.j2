@@ -1,0 +1,30 @@
+########################################################################
+########################################################################
+## This is a sample configuration file for the ftpsync mirror script. ##
+## Only options most users may need are included.  For documentation  ##
+## and all available options see ftpsync.conf(5).                     ##
+########################################################################
+########################################################################
+
+MIRRORNAME='hostname -f'
+TO="{{mirror_base_path}}/{{mirror_debian_cd_rsync_path}}/"
+
+########################################################################
+## Connection options
+########################################################################
+
+RSYNC_HOST="{{mirror_debian_cd_rsync_host}}"
+RSYNC_PATH="{{mirror_debian_cd_rsync_path}}"
+########################################################################
+## Mirror information options
+########################################################################
+
+INFO_MAINTAINER="{{mirror_debian_info_maintainer}}"
+INFO_SPONSOR="{{mirror_debian_info_sponsor}}"
+INFO_COUNTRY="{{mirror_debian_info_country}}"
+INFO_LOCATION="{{mirror_debian_info_location}}"
+INFO_THROUGHPUT="{{mirror_debian_info_throughput}}"
+
+{% if mirror_debian_logdir %}
+LOGDIR="{{mirror_debian_cd_logdir}}"
+{% endif%}

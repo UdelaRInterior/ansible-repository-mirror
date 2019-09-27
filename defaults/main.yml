@@ -1,0 +1,66 @@
+---
+
+# Mirror
+mirror_base_path: "/mnt/repos"
+mirror_scripts_path: "/var/lib/mirror"
+mirror_ssl: false
+mirror_image_path: "{{ playbook_dir }}/roles/repositories/files/images/"
+mirror_image: "repos.jpg"
+mirror_alias: ""
+
+## Cron setup
+mirror_cron: True
+mirror_bin_path: "{{mirror_scripts_path}}/mirror.sh"
+mirror_cron_day: "*"
+mirror_cron_hour: 
+  - '9'
+  - '15'
+  - '21'
+  - '3'
+
+########################################################################
+## Debian repository
+########################################################################
+
+mirror_debian_rsync_host: 'debian.c3sl.ufpr.br'
+mirror_debian_rsync_path: 'debian'
+mirror_debian_rsync_user: ''
+mirror_debian_rsync_password: ''
+mirror_debian_cd_rsync_host: 'debian.c3sl.ufpr.br'
+mirror_debian_cd_rsync_path: 'debian-cd'
+
+## Mirror information options
+mirror_debian_info_maintainer: 'Admins <admin@admin.com>'
+mirror_debian_info_sponsor: '<https://www.sponsor.com>'
+mirror_debian_info_country: 'Uruguay'
+mirror_debian_info_location: 'Montevideo'
+mirror_debian_info_throughput: 10Gb
+
+## Include and exclude options
+mirror_debian_arch_include: ''
+mirror_debian_arch_exclude: ''
+
+## Log option
+mirror_debian_logdir: '{{mirror_scripts_path}}/debian/debian/log'
+mirror_debian_cd_logdir: '{{mirror_scripts_path}}/debian/debian-cd/log'
+
+
+########################################################################
+## Ubuntu
+########################################################################
+
+mirror_ubuntu_rsync_host: 'archive.ubuntu.com'
+mirror_ubuntu_rsync_path: 'ubuntu'
+mirror_ubuntu_releases_rsync_host: 'ubuntu.c3sl.ufpr.br'
+mirror_ubuntu_releases_rsync_path: 'releases'
+
+# Other variables
+
+mirror_title: 'Your title'
+mirror_description: 'Description'
+mirror_content_description: 'The repositories published here are free software'
+mirror_list: 'Repository List'
+mirror_subtitle: 'Problem report'
+mirror_foot: 'For any problem with this repository, inform admin@server.tls'
+mirror_repository_description: 'Repositories'
+mirror_iso_description: 'Isos'

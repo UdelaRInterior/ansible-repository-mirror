@@ -1,0 +1,7 @@
+---
+
+- name: INCLUDE | config repos
+  include_tasks: config.yml
+
+- name: INCLUDE | copy scripts
+  include_tasks: copy_scripts.yml
