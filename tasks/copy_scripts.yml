@@ -2,7 +2,7 @@
 
 - name: Create directory mirror
   file:
-    path: "{{item}}"
+    path: "{{ item }}"
     state: directory
   with_items:
     - "{{ mirror_scripts_path }}/debian"

@@ -1,7 +1,7 @@
 ---
 
 - name: Install apache2
-  apt: 
+  apt:
     pkg: apache2
     state: present
 
