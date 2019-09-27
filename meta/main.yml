@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: repository
+  role_name: repository_mirror
   author: Víctor Torterola (@tricovictor)
-  description: Ansible role to install repository Debian and Ubuntu
+  description: Ansible role to install mirrors of Debian & Ubuntu repositories
   company: Red Unidades Informáticas UdelaR Interior (@UdelaRInterior)
 
   license: GPLv3
