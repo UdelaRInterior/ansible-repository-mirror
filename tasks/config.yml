@@ -2,8 +2,11 @@
 
 - name: Install apache2
   apt:
-    pkg: apache2
+    pkg: '{{ item }}'
     state: present
+  with_items: 
+    - apache2
+    - curl
 
 - name: Enable module apache2
   apache2_module:
@@ -52,3 +55,10 @@
     job: "{{ mirror_bin_path }}"
   when: mirror_cron
   with_items: "{{ mirror_cron_hour }}"
+
+- name: add cron notify_telegram
+  cron:
+    name: "Check update"
+    day: "{{ mirror_cron_day }}"
+    hour: 2
+    job: "/var/lib/mirror/notify_telegram.sh"

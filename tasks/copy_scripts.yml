@@ -42,10 +42,13 @@
 
 - name: Copy mirror.sh
   template:
-    src: mirror.sh.j2
-    dest: "{{ mirror_scripts_path }}/mirror.sh"
+    src: '{{ item }}.j2'
+    dest: "{{ mirror_scripts_path }}/{{ item }}"
     owner: root
     mode: 0766
+  with_items:
+    - mirror.sh
+    - notify_telegram.sh
 
 - name: Page init
   template:

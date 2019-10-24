@@ -1,0 +1,14 @@
+#!/bin/bash
+
+TOKEN={{ token }}
+CHAT_ID={{ chat_id }}
+MESSAGE="Actualización del repo Debian inconsistente"
+filename='/mnt/repos/debian/debian/project/trace/tala.interior.edu.uy';
+result= grep -rnw $filename -e 'Date-Started:' |awk -F , '{print $2}' |awk -F + '{print $1}';
+date=$(date '+%d %b %Y %H:%M:%S');
+diferencia= echo "$(($(date -d "$date" '+%H') - $(date -d "$result" '+%H')))";
+if (( diferencia > 24 ));
+then
+    URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+    curl -s -X POST $URL -d chat_id=$CHAT_ID -d text="$MESSAGE"
+fi
