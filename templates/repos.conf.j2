@@ -2,6 +2,7 @@
   ServerName {{inventory_hostname}}
 {% if mirror_alias %}
   ServerAlias {{mirror_alias}}
+  Redirect / {{mirror_alias}}
 {% endif %}
 
   Alias /{{mirror_debian_rsync_path}} /var/www/html/mirror/{{mirror_debian_rsync_path}}/{{mirror_debian_rsync_path}}
@@ -13,9 +14,9 @@
 
 {% if mirror_ssl %}
 <VirtualHost _default_:443>
-  ServerName https://{{inventory_hostname}}
+  ServerName {{inventory_hostname}}
 {% if mirror_alias %}
-  ServerAlias https://{{mirror_alias}}
+  ServerAlias {{mirror_alias}}
 {% endif %}
 
   Alias /{{mirror_debian_rsync_path}} /var/www/html/mirror/{{mirror_debian_rsync_path}}/{{mirror_debian_rsync_path}}

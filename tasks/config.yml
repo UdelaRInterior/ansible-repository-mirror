@@ -2,11 +2,8 @@
 
 - name: Install apache2
   apt:
-    pkg: '{{ item }}'
+    name: apache2
     state: present
-  with_items: 
-    - apache2
-    - curl
 
 - name: Enable module apache2
   apache2_module:
@@ -26,6 +23,12 @@
   notify:
     - restart_apache2
 
+- name: Remove default apache2 site.
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify: restart apache2
+
 - name: Enable site
   file:
     src: /etc/apache2/sites-available/repos.conf
@@ -34,31 +37,11 @@
   notify:
     - restart_apache2
 
-- name: Setup base path
-  file:
-    path: /mnt/repos
-    recurse: yes
-    state: directory
-    owner: root
-
-- name: Create symbolic link
-  file:
-    src: /mnt/repos
-    dest: /var/www/html/mirror
-    state: link
-
 - name: main | Cron job
   cron:
-    name: "Update mirror hour {{ item }}"
-    day: "{{ mirror_cron_day }}"
-    hour: "{{ item }}"
-    job: "{{ mirror_bin_path }}"
+    name: "Update mirror hour {{ item.mirror_cron_hour }}"
+    day: "{{ item.mirror_cron_day }}"
+    hour: "{{ item.mirror_cron_hour }}"
+    job: '{{ item.mirror_task }} --pre-hook "pkill rsync"'
   when: mirror_cron
-  with_items: "{{ mirror_cron_hour }}"
-
-- name: add cron notify_telegram
-  cron:
-    name: "Check update"
-    day: "{{ mirror_cron_day }}"
-    hour: 2
-    job: "/var/lib/mirror/notify_telegram.sh"
+  with_items: "{{ mirror_cron }}"

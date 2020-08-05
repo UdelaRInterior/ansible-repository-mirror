@@ -29,7 +29,6 @@
     mode: 0766
 
 - name: Copy ftpsync
-
   copy:
     src: "files/ftpsync/bin/ftpsync"
     dest: "{{ item }}"
@@ -40,15 +39,12 @@
     - "{{ mirror_scripts_path }}/debian/debian/bin/ftpsync"
     - "{{ mirror_scripts_path }}/debian/debian-cd/bin/ftpsync"
 
-- name: Copy mirror.sh
+- name: Copy notify telegram
   template:
-    src: '{{ item }}.j2'
-    dest: "{{ mirror_scripts_path }}/{{ item }}"
+    src: 'notify_telegram.sh.j2'
+    dest: "{{ mirror_scripts_path }}/notify_telegram.sh"
     owner: root
     mode: 0766
-  with_items:
-    - mirror.sh
-    - notify_telegram.sh
 
 - name: Page init
   template:
