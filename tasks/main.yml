@@ -1,6 +1,6 @@
 ---
 
-- name: INCLUDE | config repos
+- name: INCLUDE | config Cron
   include_tasks: config.yml
 
 - name: INCLUDE | copy scripts

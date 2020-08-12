@@ -1,4 +1,11 @@
 ---
+#Group users
+mirror_group: repos
+#user
+mirror_user:
+  user: repos
+  name: Repository
+  group: "{{ mirror_group }}"
 
 # Mirror
 mirror_base_path: "/mnt/repos"

@@ -1,45 +1,21 @@
 ---
 
-- name: Install apache2
-  apt:
-    name: apache2
+- name: Add group
+  group:
+    name: "{{ mirror_group }}"
     state: present
 
-- name: Enable module apache2
-  apache2_module:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - rewrite
-    - ssl
-  when: mirror_ssl
-  notify:
-    - restart_apache2
-
-- name: Config apache2
-  template:
-    src: repos.conf.j2
-    dest: /etc/apache2/sites-available/repos.conf
-  notify:
-    - restart_apache2
-
-- name: Remove default apache2 site.
-  file:
-    path: /etc/apache2/sites-enabled/000-default.conf
-    state: absent
-  notify: restart apache2
-
-- name: Enable site
-  file:
-    src: /etc/apache2/sites-available/repos.conf
-    dest: /etc/apache2/sites-enabled/repos.conf
-    state: link
-  notify:
-    - restart_apache2
+- name: create users
+  user:
+    name: "{{ mirror_user.user }}"
+    comment: "{{ mirror_user.name }}"
+    uid: 1040
+    group: "{{ mirror_user.group }}"
 
 - name: main | Cron job
   cron:
     name: "Update mirror hour {{ item.mirror_cron_hour }}"
+    user: "{{ mirror_user.user }}"
     day: "{{ item.mirror_cron_day }}"
     hour: "{{ item.mirror_cron_hour }}"
     job: '{{ item.mirror_task }} --pre-hook "pkill rsync"'

@@ -2,38 +2,38 @@
 
 - name: Create directory mirror
   file:
-    path: "{{ item }}"
+    path: "{{ mirror_scripts_path }}/{{ item }}"
     state: directory
   with_items:
-    - "{{ mirror_scripts_path }}/debian"
-    - "{{ mirror_scripts_path }}/debian/debian"
-    - "{{ mirror_scripts_path }}/debian/debian/etc"
-    - "{{ mirror_scripts_path }}/debian/debian/bin"
-    - "{{ mirror_scripts_path }}/debian/debian-cd"
-    - "{{ mirror_scripts_path }}/debian/debian-cd/etc"
-    - "{{ mirror_scripts_path }}/debian/debian-cd/bin"
-    - "{{ mirror_scripts_path }}/ubuntu"
+    - debian
+    - debian/debian
+    - debian/debian/etc
+    - debian/debian/bin
+    - debian/debian-cd
+    - debian/debian-cd/etc
+    - debian/debian-cd/bin
+    - ubuntu
 
 - name: Template | repository Debian
   template:
     src: ftpsync.conf.j2
     dest: "{{ mirror_scripts_path }}/debian/debian/etc/ftpsync.conf"
-    owner: root
+    owner: "{{ mirror_user.user }}"
     mode: 0766
 
 - name: Template | repository Debian-cd
   template:
     src: ftpsync-cd.conf.j2
     dest: "{{ mirror_scripts_path }}/debian/debian-cd/etc/ftpsync.conf"
-    owner: root
+    owner: "{{ mirror_user.user }}"
     mode: 0766
 
 - name: Copy ftpsync
   copy:
     src: "files/ftpsync/bin/ftpsync"
     dest: "{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ mirror_user.user }}"
+    group: "{{ mirror_user.group }}"
     mode: 0766
   with_items:
     - "{{ mirror_scripts_path }}/debian/debian/bin/ftpsync"
@@ -43,20 +43,20 @@
   template:
     src: 'notify_telegram.sh.j2'
     dest: "{{ mirror_scripts_path }}/notify_telegram.sh"
-    owner: root
+    owner: "{{ mirror_user.user }}"
     mode: 0766
 
 - name: Page init
   template:
     src: index.html.j2
-    dest: /var/www/html/index.html
-    owner: root
+    dest: /var/www/html/mirror/index.html
+    owner: "{{ mirror_user.user }}"
     mode: 0644
 
 - name: Copy image
   copy:
     src: "{{ mirror_image_path }}/{{ mirror_image }}"
-    dest: /var/www/html/{{ mirror_image }}
-    owner: root
-    group: root
+    dest: /var/www/html/mirror/{{ mirror_image }}
+    owner: "{{ mirror_user.user }}"
+    group: "{{ mirror_user.group }}"
     mode: 0644
