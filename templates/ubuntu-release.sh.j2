@@ -12,7 +12,7 @@ warn() {
 # Find a source mirror near you which supports rsync on
 # https://launchpad.net/ubuntu/+cdmirrors
 # rsync://<iso-country-code>.rsync.releases.ubuntu.com/releases should always work
-RSYNCSOURCE=rsync://{{mirror_ubuntu-releases_rsync_host}}/{{mirror_ubuntu-releases_rsync_path}}
+RSYNCSOURCE=rsync://{{mirror_ubuntu_releases_rsync_host}}/{{mirror_ubuntu_releases_rsync_path}}
 
 # Define where you want the mirror-data to be on your mirror
 BASEDIR=/var/www/html/mirror/ubuntu/releases/

@@ -1,9 +1,11 @@
 ---
 
-- name: Create directory mirror
+- name: Create directory scripts
   file:
     path: "{{ mirror_scripts_path }}/{{ item }}"
     state: directory
+    owner: "{{ mirror_user.user }}"
+    group: "{{ mirror_user.group }}"
   with_items:
     - debian
     - debian/debian
@@ -12,6 +14,16 @@
     - debian/debian-cd
     - debian/debian-cd/etc
     - debian/debian-cd/bin
+    - ubuntu
+
+- name: Create directory mirror
+  file:
+    path: "{{ mirror_base_path }}/{{ item }}"
+    state: directory
+    owner: "{{ mirror_user.user }}"
+    group: "{{ mirror_user.group }}"
+  with_items:
+    - debian
     - ubuntu
 
 - name: Template | repository Debian
@@ -45,6 +57,17 @@
     dest: "{{ mirror_scripts_path }}/notify_telegram.sh"
     owner: "{{ mirror_user.user }}"
     mode: 0766
+  when: mirror_telegram_token
+
+- name: Copy script ubuntu
+  template:
+    src: '{{ item }}.j2'
+    dest: "{{ mirror_scripts_path }}/ubuntu/{{ item }}"
+    owner: "{{ mirror_user.user }}"
+    mode: 0766
+  with_items:
+    - "ubuntu.sh"
+    - "ubuntu-release.sh"
 
 - name: Page init
   template:

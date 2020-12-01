@@ -15,7 +15,7 @@ warn() {
 RSYNCSOURCE=rsync://{{mirror_ubuntu_rsync_host}}/{{mirror_ubuntu_rsync_path}}
 
 # Define where you want the mirror-data to be on your mirror
-BASEDIR={{mirror_base_path}}/{{mirror_ubuntu_rsync_path}}/
+BASEDIR={{mirror_base_path}}/ubuntu/{{mirror_ubuntu_rsync_path}}/
 
 if [ ! -d ${BASEDIR} ]; then
   warn "${BASEDIR} does not exist yet, trying to create it..."
@@ -33,7 +33,3 @@ rsync --recursive --times --links --safe-links --hard-links \
   ${RSYNCSOURCE} ${BASEDIR} || fatal "Second stage of sync failed."
 
 date -u > ${BASEDIR}/project/trace/$(hostname -f)
-
-
-
-

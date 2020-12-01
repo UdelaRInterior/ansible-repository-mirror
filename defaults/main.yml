@@ -35,7 +35,7 @@ mirror_cron:
   - mirror_task: "{{mirror_scripts_path}}/ubuntu/ubuntu.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '5'
-  - mirror_task: "{{mirror_scripts_path}}/ubuntu/release_ubuntu.sh"
+  - mirror_task: "{{mirror_scripts_path}}/ubuntu/ubuntu-release.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '6'
   - mirror_task: "{{mirror_scripts_path}}/notify_telegram.sh"
@@ -88,3 +88,5 @@ mirror_subtitle: 'Problem report'
 mirror_foot: 'For any problem with this repository, inform admin@server.tls'
 mirror_repository_description: 'Repositories'
 mirror_iso_description: 'Isos'
+mirror_telegram_token:
+mirror_telegram_chat_id:
