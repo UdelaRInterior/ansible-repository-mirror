@@ -6,7 +6,7 @@ This role creates a public Debian and Ubuntu repository that automatically synch
 Requirements
 ------------
 
-Mirror-role runs on a debian distro. 
+Mirror-role runs on a debian distro.
 
 Note
 ----
@@ -26,6 +26,14 @@ Each client configuration override global configuration.
 - `mirror_base_path`: (O) location of the files that mirror updates. Default (/mnt/repos)
 - `mirror_image_path`: (0) set the path of the image
 - `mirror_image`: (0) set image of web interface
+- `mirror_directories_scripts`: (0) create directories to store update scripts. Default (debian,
+   debian/debian, debian/debian/etc, debian/debian/bin, debian/debian-cd, debian/debian-cd/etc,
+   debian/debian-cd/bin, ubuntu)
+- `mirror_directories`: (0) create directories to store repositories. Default (debian, ubuntu)
+- `mirror_template_debian`: (0) Copy update script debian. Default /var/lib/mirror/debian/debian/etc/ftpsync.conf
+- `mirror_template_debian_cd`: (0) Copy update script debian-cd. Default /var/lib/mirror/debian/debian-cd/etc/ftpsync.conf
+- `mirror_template_ubuntu`: (0) Copy update script ubuntu. Default /var/lib/mirror/ubuntu/
+- `mirror_page_init`: (0) homepage destination. Default /var/www/html/mirror/index.html
 
 ### Debian repository
 - `mirror_debian_rsync_host`: (0) hosts to synchronize. Default (debian.c3sl.ufpr.br)

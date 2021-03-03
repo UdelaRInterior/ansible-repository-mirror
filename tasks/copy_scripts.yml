@@ -18,8 +18,8 @@
 
 - name: Create symbolic link
   file:
-    src: /mnt/repos
-    dest: /var/www/html/mirror
+    src: "{{ mirror_base_path }}"
+    dest: "{{ mirror_apache_path }}"
     state: link
 
 - name: Template | repository Debian
@@ -39,13 +39,13 @@
 - name: Copy ftpsync
   copy:
     src: "files/ftpsync/bin/ftpsync"
-    dest: "{{ item }}"
+    dest: "{{ mirror_scripts_path }}{{ item }}"
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
     mode: 0766
   with_items:
-    - "{{ mirror_scripts_path }}/debian/debian/bin/ftpsync"
-    - "{{ mirror_scripts_path }}/debian/debian-cd/bin/ftpsync"
+    - "/debian/debian/bin/ftpsync"
+    - "/debian/debian-cd/bin/ftpsync"
 
 - name: Copy notify telegram
   template:
@@ -58,7 +58,7 @@
 - name: Copy script ubuntu
   template:
     src: '{{ item }}.j2'
-    dest: "{{ mirror_scripts_path }}/ubuntu/{{ item }}"
+    dest: "{{ mirror_template_ubuntu}}{{ item }}"
     owner: "{{ mirror_user.user }}"
     mode: 0766
   with_items:
@@ -75,7 +75,7 @@
 - name: Copy image
   copy:
     src: "{{ mirror_image_path }}/{{ mirror_image }}"
-    dest: /var/www/html/mirror/{{ mirror_image }}
+    dest: "{{ mirror_apache_path }}/{{ mirror_image }}"
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
     mode: 0644

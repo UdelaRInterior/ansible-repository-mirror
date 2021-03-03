@@ -10,6 +10,7 @@ mirror_user:
 # Mirror
 mirror_base_path: "/mnt/repos"
 mirror_scripts_path: "/var/lib/mirror"
+mirror_apache_path: "/var/www/html/mirror"
 mirror_ssl: false
 mirror_image_path: "{{ playbook_dir }}/roles/repositories/files/images/"
 mirror_image: "repos.jpg"
@@ -33,6 +34,7 @@ mirror_template_debian: "{{ mirror_scripts_path }}/debian/debian/etc/ftpsync.con
 mirror_template_debian_cd: "{{ mirror_scripts_path }}/debian/debian-cd/etc/ftpsync.conf"
 mirror_page_init: /var/www/html/mirror/index.html
 
+mirror_template_ubuntu: "{{ mirror_scripts_path }}/ubuntu/"
 ## Cron setup
 mirror_cron:
   - mirror_task: "{{mirror_scripts_path}}/debian/debian/bin/ftpsync sync:all"
