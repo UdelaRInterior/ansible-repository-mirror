@@ -6,15 +6,7 @@
     state: directory
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
-  with_items:
-    - debian
-    - debian/debian
-    - debian/debian/etc
-    - debian/debian/bin
-    - debian/debian-cd
-    - debian/debian-cd/etc
-    - debian/debian-cd/bin
-    - ubuntu
+  with_items: "{{ mirror_directories_scripts }}"
 
 - name: Create directory mirror
   file:
@@ -22,9 +14,7 @@
     state: directory
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
-  with_items:
-    - debian
-    - ubuntu
+  with_items: "{{ mirror_directories }}"
 
 - name: Create symbolic link
   file:
@@ -35,14 +25,14 @@
 - name: Template | repository Debian
   template:
     src: ftpsync.conf.j2
-    dest: "{{ mirror_scripts_path }}/debian/debian/etc/ftpsync.conf"
+    dest: "{{ mirror_template_debian }}"
     owner: "{{ mirror_user.user }}"
     mode: 0766
 
 - name: Template | repository Debian-cd
   template:
     src: ftpsync-cd.conf.j2
-    dest: "{{ mirror_scripts_path }}/debian/debian-cd/etc/ftpsync.conf"
+    dest: "{{ mirror_template_debian_cd }}"
     owner: "{{ mirror_user.user }}"
     mode: 0766
 
@@ -78,7 +68,7 @@
 - name: Page init
   template:
     src: index.html.j2
-    dest: /var/www/html/mirror/index.html
+    dest: "{{ mirror_page_init }}"
     owner: "{{ mirror_user.user }}"
     mode: 0644
 

@@ -15,6 +15,24 @@ mirror_image_path: "{{ playbook_dir }}/roles/repositories/files/images/"
 mirror_image: "repos.jpg"
 mirror_alias: ""
 
+mirror_directories_scripts:
+  - debian
+  - debian/debian
+  - debian/debian/etc
+  - debian/debian/bin
+  - debian/debian-cd
+  - debian/debian-cd/etc
+  - debian/debian-cd/bin
+  - ubuntu
+
+mirror_directories:
+  - debian
+  - ubuntu
+
+mirror_template_debian: "{{ mirror_scripts_path }}/debian/debian/etc/ftpsync.conf"
+mirror_template_debian_cd: "{{ mirror_scripts_path }}/debian/debian-cd/etc/ftpsync.conf"
+mirror_page_init: /var/www/html/mirror/index.html
+
 ## Cron setup
 mirror_cron:
   - mirror_task: "{{mirror_scripts_path}}/debian/debian/bin/ftpsync sync:all"
