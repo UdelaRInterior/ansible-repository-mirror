@@ -26,6 +26,12 @@
     - debian
     - ubuntu
 
+- name: Create symbolic link
+  file:
+    src: /mnt/repos
+    dest: /var/www/html/mirror
+    state: link
+
 - name: Template | repository Debian
   template:
     src: ftpsync.conf.j2
