@@ -53,7 +53,7 @@
     dest: "{{ mirror_scripts_path }}/notify_telegram.sh"
     owner: "{{ mirror_user.user }}"
     mode: 0766
-  when: mirror_telegram_token
+  when: mirror_telegram_token != ""
 
 - name: Copy script ubuntu
   template:
