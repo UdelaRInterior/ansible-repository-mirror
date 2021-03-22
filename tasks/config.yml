@@ -9,7 +9,6 @@
   user:
     name: "{{ mirror_user.user }}"
     comment: "{{ mirror_user.name }}"
-    uid: 1040
     group: "{{ mirror_user.group }}"
 
 - name: main | Cron job
