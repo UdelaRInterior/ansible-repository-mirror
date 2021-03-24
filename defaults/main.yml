@@ -14,48 +14,35 @@ mirror_apache_path: "/var/www/html/mirror"
 mirror_ssl: false
 mirror_image_path: "{{ playbook_dir }}/roles/repositories/files/images/"
 mirror_image: "repos.jpg"
+mirror_page_init: "index.html"
 mirror_alias: ""
 
-mirror_directories_scripts:
-  - debian
-  - debian/debian
-  - debian/debian/etc
-  - debian/debian/bin
-  - debian/debian-cd
-  - debian/debian-cd/etc
-  - debian/debian-cd/bin
-  - ubuntu
+mirror_debian_scripts_root_path: "{{ mirror_scripts_path }}/debian"
+mirror_debian_scripts_path: "{{ mirror_debian_scripts_root_path }}/debian"
+mirror_debian_cd_scripts_path: "{{ mirror_debian_scripts_root_path }}/debian-cd"
+mirror_ubuntu_scripts_path: "{{ mirror_scripts_path }}/ubuntu"
 
-mirror_directories:
-  - debian
-  - ubuntu
-
-mirror_template_debian: "{{ mirror_scripts_path }}/debian/debian/etc/ftpsync.conf"
-mirror_template_debian_cd: "{{ mirror_scripts_path }}/debian/debian-cd/etc/ftpsync.conf"
-mirror_page_init: /var/www/html/mirror/index.html
-
-mirror_template_ubuntu: "{{ mirror_scripts_path }}/ubuntu/"
 ## Cron setup
 mirror_cron:
-  - mirror_task: "{{mirror_scripts_path}}/debian/debian/bin/ftpsync sync:all"
+  - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '9'
-  - mirror_task: "{{mirror_scripts_path}}/debian/debian/bin/ftpsync sync:all"
+  - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '15'
-  - mirror_task: "{{mirror_scripts_path}}/debian/debian/bin/ftpsync sync:all"
+  - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '21'
-  - mirror_task: "{{mirror_scripts_path}}/debian/debian/bin/ftpsync sync:all"
+  - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '3'
-  - mirror_task: "{{mirror_scripts_path}}/debian/debian-cd/bin/ftpsync sync:all"
+  - mirror_task: "{{mirror_debian_cd_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '4'
-  - mirror_task: "{{mirror_scripts_path}}/ubuntu/ubuntu.sh"
+  - mirror_task: "{{mirror_ubuntu_scripts_path}}/ubuntu.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '5'
-  - mirror_task: "{{mirror_scripts_path}}/ubuntu/ubuntu-release.sh"
+  - mirror_task: "{{mirror_ubuntu_scripts_path}}/ubuntu-release.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '6'
   - mirror_task: "{{mirror_scripts_path}}/notify_telegram.sh"
@@ -83,10 +70,12 @@ mirror_debian_info_throughput: 10Gb
 ## Include and exclude options
 mirror_debian_arch_include: ''
 mirror_debian_arch_exclude: ''
+mirror_debian_cd_arch_include: ''
+mirror_debian_cd_arch_exclude: ''
 
 ## Log option
-mirror_debian_logdir: '{{mirror_scripts_path}}/debian/debian/log'
-mirror_debian_cd_logdir: '{{mirror_scripts_path}}/debian/debian-cd/log'
+mirror_debian_logdir: '{{mirror_debian_scripts_path}}/log'
+mirror_debian_cd_logdir: '{{mirror_debian_cd_scripts_path}}/log'
 
 
 ########################################################################

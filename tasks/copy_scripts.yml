@@ -2,11 +2,19 @@
 
 - name: Create directory scripts
   file:
-    path: "{{ mirror_scripts_path }}/{{ item }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
-  with_items: "{{ mirror_directories_scripts }}"
+  with_items:
+  - "{{mirror_debian_scripts_root_path}}"
+  - "{{mirror_debian_scripts_path}}"
+  - "{{mirror_debian_scripts_path}}/etc"
+  - "{{mirror_debian_scripts_path}}/bin"
+  - "{{mirror_debian_cd_scripts_path}}"
+  - "{{mirror_debian_cd_scripts_path}}/etc"
+  - "{{mirror_debian_cd_scripts_path}}/bin"
+  - "{{mirror_ubuntu_scripts_path}}"  
 
 - name: Create directory mirror
   file:
@@ -14,7 +22,9 @@
     state: directory
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
-  with_items: "{{ mirror_directories }}"
+  with_items:
+    - debian
+    - ubuntu
 
 - name: Create symbolic link
   file:
@@ -25,27 +35,27 @@
 - name: Template | repository Debian
   template:
     src: ftpsync.conf.j2
-    dest: "{{ mirror_template_debian }}"
+    dest: "{{ mirror_debian_scripts_path }}/etc/ftpsync.conf"
     owner: "{{ mirror_user.user }}"
     mode: 0766
 
 - name: Template | repository Debian-cd
   template:
     src: ftpsync-cd.conf.j2
-    dest: "{{ mirror_template_debian_cd }}"
+    dest: "{{ mirror_debian_cd_scripts_path }}/etc/ftpsync.conf"
     owner: "{{ mirror_user.user }}"
     mode: 0766
 
 - name: Copy ftpsync
   copy:
     src: "files/ftpsync/bin/ftpsync"
-    dest: "{{ mirror_scripts_path }}{{ item }}"
+    dest: "{{ item }}"
     owner: "{{ mirror_user.user }}"
     group: "{{ mirror_user.group }}"
     mode: 0766
   with_items:
-    - "/debian/debian/bin/ftpsync"
-    - "/debian/debian-cd/bin/ftpsync"
+    - "{{ mirror_debian_scripts_path }}/bin/ftpsync"
+    - "{{ mirror_debian_cd_scripts_path }}/bin/ftpsync"
 
 - name: Copy notify telegram
   template:
@@ -58,7 +68,7 @@
 - name: Copy script ubuntu
   template:
     src: '{{ item }}.j2'
-    dest: "{{ mirror_template_ubuntu}}{{ item }}"
+    dest: "{{ mirror_ubuntu_scripts_path }}/{{ item }}"
     owner: "{{ mirror_user.user }}"
     mode: 0766
   with_items:
@@ -68,7 +78,7 @@
 - name: Page init
   template:
     src: index.html.j2
-    dest: "{{ mirror_page_init }}"
+    dest: "{{mirror_apache_path}}/{{ mirror_page_init }}"
     owner: "{{ mirror_user.user }}"
     mode: 0644
 

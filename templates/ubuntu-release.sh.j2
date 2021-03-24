@@ -15,7 +15,7 @@ warn() {
 RSYNCSOURCE=rsync://{{mirror_ubuntu_releases_rsync_host}}/{{mirror_ubuntu_releases_rsync_path}}
 
 # Define where you want the mirror-data to be on your mirror
-BASEDIR=/var/www/html/mirror/ubuntu/releases/
+BASEDIR={{mirror_base_path}}/ubuntu/{{mirror_ubuntu_releases_rsync_path}}/
 
 if [ ! -d ${BASEDIR} ]; then
   warn "${BASEDIR} does not exist yet, trying to create it..."
