@@ -3,7 +3,7 @@
 TOKEN={{ mirror_telegram_token }}
 CHAT_ID={{ mirror_telegram_chat_id }}
 MESSAGE="Actualización del repo Debian inconsistente"
-filename='{{mirror_debian_scripts_path}}/project/trace/{{inventory_hostname}}';
+filename='{{mirror_base_path}}/debian/{{mirror_debian_rsync_path}}/project/trace/{{inventory_hostname}}';
 #day last update
 result=$(grep -rnw $filename -e 'Date-Started:' |awk -F , '{print $2}' |awk -F + '{print $1}');
 #change format
