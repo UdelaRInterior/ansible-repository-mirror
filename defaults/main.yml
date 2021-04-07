@@ -27,27 +27,35 @@ mirror_cron:
   - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '9'
+    mirror_cron_minute: '0'
   - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '15'
+    mirror_cron_minute: '0'
   - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
-    mirror_cron_hour: '21'
+    mirror_cron_hour: '22'
+    mirror_cron_minute: '0'
   - mirror_task: "{{mirror_debian_scripts_path}}/bin/ftpsync sync:all"
-    mirror_cron_day: "*"
-    mirror_cron_hour: '3'
-  - mirror_task: "{{mirror_debian_cd_scripts_path}}/bin/ftpsync sync:all"
     mirror_cron_day: "*"
     mirror_cron_hour: '4'
+    mirror_cron_minute: '0'
+  - mirror_task: "{{mirror_debian_cd_scripts_path}}/bin/ftpsync sync:all"
+    mirror_cron_day: "*"
+    mirror_cron_hour: '3'
+    mirror_cron_minute: '0'
   - mirror_task: "{{mirror_ubuntu_scripts_path}}/ubuntu.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '5'
+    mirror_cron_minute: '0'
   - mirror_task: "{{mirror_ubuntu_scripts_path}}/ubuntu-release.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '6'
+    mirror_cron_minute: '0'
   - mirror_task: "{{mirror_scripts_path}}/notify_telegram.sh"
     mirror_cron_day: "*"
     mirror_cron_hour: '8'
+    mirror_cron_minute: '0'
 
 ########################################################################
 ## Debian repository

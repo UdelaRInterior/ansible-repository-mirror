@@ -26,13 +26,11 @@ Each client configuration override global configuration.
 - `mirror_base_path`: (O) location of the files that mirror updates. Default (/mnt/repos)
 - `mirror_image_path`: (0) set the path of the image
 - `mirror_image`: (0) set image of web interface
-- `mirror_directories_scripts`: (0) create directories to store update scripts. Default (debian,
-   debian/debian, debian/debian/etc, debian/debian/bin, debian/debian-cd, debian/debian-cd/etc,
-   debian/debian-cd/bin, ubuntu)
 - `mirror_directories`: (0) create directories to store repositories. Default (debian, ubuntu)
-- `mirror_template_debian`: (0) Copy update script debian. Default /var/lib/mirror/debian/debian/etc/ftpsync.conf
-- `mirror_template_debian_cd`: (0) Copy update script debian-cd. Default /var/lib/mirror/debian/debian-cd/etc/ftpsync.conf
-- `mirror_template_ubuntu`: (0) Copy update script ubuntu. Default /var/lib/mirror/ubuntu/
+- `mirror_debian_scripts_root_path`: location of the files that scripts. Default "{{ mirror_scripts_path }}/debian"
+- `mirror_debian_scripts_path`: (0) Copy update script debian. Default "{{ mirror_debian_scripts_root_path }}/debian"
+- `mirror_debian_cd_scripts_path`: (0) Copy update script debian-cd. Default "{{ mirror_debian_scripts_root_path }}/debian-cd"
+- `mirror_ubuntu_scripts_path`: (0) Copy update script ubuntu. Default "{{ mirror_scripts_path }}/ubuntu"
 - `mirror_page_init`: (0) homepage destination. Default /var/www/html/mirror/index.html
 
 ### Debian repository
@@ -53,6 +51,8 @@ Each client configuration override global configuration.
 ## Include and exclude options
 - `mirror_debian_arch_include`: (0) Default ()
 - `mirror_debian_arch_exclude`: (0) Default ()
+- `mirror_debian_cd_arch_include` : (0) Default ()
+- `mirror_debian_cd_arch_exclude` : (0) Default ()
 
 ## Log option
 - `mirror_debian_logdir`: (0) repository log path. Default ({{mirror_scripts_path}}/debian/debian/log)

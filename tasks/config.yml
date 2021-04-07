@@ -17,6 +17,7 @@
     user: "{{ mirror_user.user }}"
     day: "{{ item.mirror_cron_day }}"
     hour: "{{ item.mirror_cron_hour }}"
-    job: '{{ item.mirror_task }} --pre-hook "pkill rsync"'
+    minute: "{{ item.mirror_cron_minute }}"
+    job: '{{ item.mirror_task }}'
   when: mirror_cron
   with_items: "{{ mirror_cron }}"
