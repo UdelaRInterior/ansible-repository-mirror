@@ -20,9 +20,17 @@ Role Variables
 ### Local vars
 
 Each client configuration override global configuration.
+- `mirror_group`: (0) Linux user group name. Default (repos)
+- `mirror_user`: (0) Linux user. Default (repos)
+- `mirror_scripts_path`: (0) Script location. Default (/var/lib/mirror)
+- `mirror_apache_path`: (0) Mirror location. Default (/var/www/html/mirror)
+- `mirror_ssl`: (0) SSL Enabled or disabled. Default (false)
+- `mirror_alias`: (0) Alias from server . Default (null)
 - `mirror_cron`: (0) is added to cron. Default (true)
+- `mirror_task`: (0) task of to cron. Default (*)
 - `mirror_cron_day`: (O) day of the cron. Default (*)
 - `mirror_cron_hour`: (O) hour of the cron. Default (23)
+- `mirror_cron_minute`: (O) minute of the cron. Default (0)
 - `mirror_base_path`: (O) location of the files that mirror updates. Default (/mnt/repos)
 - `mirror_image_path`: (0) set the path of the image
 - `mirror_image`: (0) set image of web interface
@@ -68,12 +76,14 @@ Each client configuration override global configuration.
 ### Other variables
 - `mirror_title`: (0) your title. Default (Your title)
 - `mirror_description`: (0) description. Default (Description)
-- `mirror_content`: (0) content description. Default (The repositories published here are free software)
+- `mirror_content_description`: (0) content description. Default (The repositories published here are free software)
 - `mirror_list`: (0) title. Default (Repository List)
 - `mirror_subtitle`: (0) title. Default (Problem report)
 - `mirror_foot`: (0) foot. Default (For any problem with this repository, inform admin@server.tls)
-- `mirror_repository`: (0) description repositories. Default (Repositories)
+- `mirror_repository_description`: (0) description repositories. Default (Repositories)
 - `mirror_iso_description`: (0) description isos. Default (Isos)
+- `mirror_telegram_token`: (0) token for communication of update errors. Default (null)
+- `mirror_telegram_chat_id`: (0) ID chat Telegram. Default (null)
 
 (O): Optional
 
