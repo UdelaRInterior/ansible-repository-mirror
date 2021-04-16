@@ -1,22 +1,30 @@
 ---
-#Group users
+# User and group
 mirror_group: repos
-#user
 mirror_user:
   user: repos
   name: Repository
   group: "{{ mirror_group }}"
 
-# Mirror
+# Mirror base path
 mirror_base_path: "/mnt/repos"
-mirror_scripts_path: "/var/lib/mirror"
+
+## Mirror web site
 mirror_apache_path: "/var/www/html/mirror"
-mirror_ssl: false
 mirror_image_path: "{{ playbook_dir }}/roles/repositories/files/images/"
 mirror_image: "repos.jpg"
 mirror_page_init: "index.html"
-mirror_alias: ""
+mirror_title: 'Your title'
+mirror_description: 'Description'
+mirror_content_description: 'The repositories published here are free software'
+mirror_list: 'Repository List'
+mirror_subtitle: 'Problem report'
+mirror_foot: 'For any problem with this repository, inform admin@server.tls'
+mirror_repository_description: 'Repositories'
+mirror_iso_description: 'Isos'
 
+## Scripts paths
+mirror_scripts_path: "/var/lib/mirror"
 mirror_debian_scripts_root_path: "{{ mirror_scripts_path }}/debian"
 mirror_debian_scripts_path: "{{ mirror_debian_scripts_root_path }}/debian"
 mirror_debian_cd_scripts_path: "{{ mirror_debian_scripts_root_path }}/debian-cd"
@@ -85,7 +93,6 @@ mirror_debian_cd_arch_exclude: ''
 mirror_debian_logdir: '{{mirror_debian_scripts_path}}/log'
 mirror_debian_cd_logdir: '{{mirror_debian_cd_scripts_path}}/log'
 
-
 ########################################################################
 ## Ubuntu
 ########################################################################
@@ -96,14 +103,7 @@ mirror_ubuntu_releases_rsync_host: 'ubuntu.c3sl.ufpr.br'
 mirror_ubuntu_releases_rsync_path: 'releases'
 
 # Other variables
-
-mirror_title: 'Your title'
-mirror_description: 'Description'
-mirror_content_description: 'The repositories published here are free software'
-mirror_list: 'Repository List'
-mirror_subtitle: 'Problem report'
-mirror_foot: 'For any problem with this repository, inform admin@server.tls'
-mirror_repository_description: 'Repositories'
-mirror_iso_description: 'Isos'
 mirror_telegram_token:
 mirror_telegram_chat_id:
+
+...

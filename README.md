@@ -16,79 +16,81 @@ Sufficient storage space is needed according to what you want to replicate. If y
 Role Variables
 --------------
 
-
-### Local vars
+### Mirror basic variables
 
 Each client configuration override global configuration.
-- `mirror_group`: (0) Linux user group name. Default (repos)
-- `mirror_user`: (0) Linux user. Default (repos)
-- `mirror_scripts_path`: (0) Script location. Default (/var/lib/mirror)
-- `mirror_apache_path`: (0) Mirror location. Default (/var/www/html/mirror)
-- `mirror_ssl`: (0) SSL Enabled or disabled. Default (false)
-- `mirror_alias`: (0) Alias from server . Default (null)
-- `mirror_cron`: (0) is added to cron. Default (true)
-- `mirror_task`: (0) task of to cron. Default (*)
-- `mirror_cron_day`: (O) day of the cron. Default (*)
-- `mirror_cron_hour`: (O) hour of the cron. Default (23)
-- `mirror_cron_minute`: (O) minute of the cron. Default (0)
-- `mirror_base_path`: (O) location of the files that mirror updates. Default (/mnt/repos)
-- `mirror_image_path`: (0) set the path of the image
-- `mirror_image`: (0) set image of web interface
-- `mirror_directories`: (0) create directories to store repositories. Default (debian, ubuntu)
-- `mirror_debian_scripts_root_path`: location of the files that scripts. Default "{{ mirror_scripts_path }}/debian"
-- `mirror_debian_scripts_path`: (0) Copy update script debian. Default "{{ mirror_debian_scripts_root_path }}/debian"
-- `mirror_debian_cd_scripts_path`: (0) Copy update script debian-cd. Default "{{ mirror_debian_scripts_root_path }}/debian-cd"
-- `mirror_ubuntu_scripts_path`: (0) Copy update script ubuntu. Default "{{ mirror_scripts_path }}/ubuntu"
-- `mirror_page_init`: (0) homepage destination. Default /var/www/html/mirror/index.html
+- `mirror_group`: (O) Linux user group name. Default (repos)
+- `mirror_user`: (O) Linux user. Default (repos)
+- `mirror_cron`: (O) cron tasks/jobs list. Default (see [defaults/main.yml](defaults/main.yml))
+  - `mirror_task`: (O) cron task/job.
+  - `mirror_cron_day`: (O) cron job day.
+  - `mirror_cron_hour`: (O) cron job hour.
+  - `mirror_cron_minute`: (O) cron job minute.
+- `mirror_base_path`: (O) path of files updated by mirror. Default (/mnt/repos)
+
+### Mirror web site
+
+- `mirror_apache_path`: (O) mirror Apache2 document root. Default (/var/www/html/mirror)
+- `mirror_image_path`: (O) logo file path. Default ("{{ playbook_dir }}/roles/repositories/files/images/")
+- `mirror_image`: (O) logo file name. Default (repos.jpg)
+- `mirror_page_init`: (O) homepage file name. Default (index.html)
+- `mirror_title`: (O) web title. Default (Your title)
+- `mirror_description`: (O) description subtitle. Default (Description)
+- `mirror_content_description`: (O) description text. Default (The repositories published here are free software)
+- `mirror_list`: (O) repositories list subtitle. Default (Repository List)
+- `mirror_subtitle`: (O) footer subtitile. Default (Problem report)
+- `mirror_foot`: (O) footer text. Default (For any problem with this repository, inform admin@server.tls)
+- `mirror_repository_description`: (O) repository prefix text. Default (Repositories)
+- `mirror_iso_description`: (O) iso prefix text. Default (Isos)
+
+### Scripts paths
+
+- `mirror_scripts_path`: (O) scripts root path. Default (/var/lib/mirror)
+- `mirror_debian_scripts_root_path`: Debian scripts root path. Default "{{ mirror_scripts_path }}/debian"
+- `mirror_debian_scripts_path`: (O) Debian repository scripts path. Default "{{ mirror_debian_scripts_root_path }}/debian"
+- `mirror_debian_cd_scripts_path`: (O) Debian isos scripts path. Default "{{ mirror_debian_scripts_root_path }}/debian-cd"
+- `mirror_ubuntu_scripts_path`: (O) Ubuntu scripts path. Default "{{ mirror_scripts_path }}/ubuntu"
 
 ### Debian repository
-- `mirror_debian_rsync_host`: (0) hosts to synchronize. Default (debian.c3sl.ufpr.br)
-- `mirror_debian_rsync_path`: (0) host path. Default (debian)
-- `mirror_debian_rsync_user`: (0) user for private host. Default (null)
-- `mirror_debian_rsync_password`: (0) password for private host. Default (null)
-- `mirror_debian_cd_rsync_host`: (0) hosts to synchronize isos . Default (debian.c3sl.ufpr.br)
-- `mirror_debian_cd_rsync_path`: (0) host path isos. Default (debian-cd)
+- `mirror_debian_rsync_host`: (O) Debian rsync server. Default (debian.c3sl.ufpr.br)
+- `mirror_debian_rsync_path`: (O) server path. Default (debian)
+- `mirror_debian_rsync_user`: (O) server user name (private host). Default (null)
+- `mirror_debian_rsync_password`: (O) user password (private host). Default (null)
+- `mirror_debian_cd_rsync_host`: (O) Debian isos rsync server. Default (debian.c3sl.ufpr.br)
+- `mirror_debian_cd_rsync_path`: (O) server isos path. Default (debian-cd)
 
-## Mirror information options
-- `mirror_debian_info_maintainer`: (0) email adminsys. Default (Admins <admin@admin.com>)
-- `mirror_debian_info_sponsor`: (0) web sponsor. Default (<https://www.sponsor.com>)
-- `mirror_debian_info_country`: (0) country. Default (Uruguay)
-- `mirror_debian_info_location`: (0) city. Default (Montevideo)
-- `mirror_debian_info_throughput`: (0) throughput rate. Default (10Gb)
+#### Mirror service owner details
+- `mirror_debian_info_maintainer`: (O) maintainer email. Default (Admins <admin@admin.com>)
+- `mirror_debian_info_sponsor`: (O) sponsor web. Default (<https://www.sponsor.com>)
+- `mirror_debian_info_country`: (O) country. Default (Uruguay)
+- `mirror_debian_info_location`: (O) city. Default (Montevideo)
+- `mirror_debian_info_throughput`: (O) throughput rate. Default (10Gb)
 
-## Include and exclude options
-- `mirror_debian_arch_include`: (0) Default ()
-- `mirror_debian_arch_exclude`: (0) Default ()
-- `mirror_debian_cd_arch_include` : (0) Default ()
-- `mirror_debian_cd_arch_exclude` : (0) Default ()
+#### Include and exclude options
+- `mirror_debian_arch_include`: (O) Default ()
+- `mirror_debian_arch_exclude`: (O) Default ()
+- `mirror_debian_cd_arch_include` : (O) Default ()
+- `mirror_debian_cd_arch_exclude` : (O) Default ()
 
-## Log option
-- `mirror_debian_logdir`: (0) repository log path. Default ({{mirror_scripts_path}}/debian/debian/log)
-- `mirror_debian_cd_logdir`: (0) iso log path Default ({{mirror_scripts_path}}/debian/debian-cd/log)
+#### Log options
+- `mirror_debian_logdir`: (O) Debian repository log path. Default ({{mirror_scripts_path}}/debian/debian/log)
+- `mirror_debian_cd_logdir`: (O) Debian isos log path. Default ({{mirror_scripts_path}}/debian/debian-cd/log)
 
 ### Ubuntu repository
-- `mirror_ubuntu_rsync_host`: (0) hosts to synchronize. Default (ubuntu.c3sl.ufpr.br)
-- `mirror_ubuntu_rsync_path`: (0) host path. Default (ubuntu)
-- `mirror_ubuntu_releases_rsync_host`: (0) hosts to synchronize isos . Default (ubuntu.c3sl.ufpr.br)
-- `mirror_ubuntu_releases_rsync_path`: (0) host path releases. Default (releases)
-
+- `mirror_ubuntu_rsync_host`: (O) Ubuntu rsync server. Default (ubuntu.c3sl.ufpr.br)
+- `mirror_ubuntu_rsync_path`: (O) server path. Default (ubuntu)
+- `mirror_ubuntu_releases_rsync_host`: (O) Ubuntu isos rsync server . Default (ubuntu.c3sl.ufpr.br)
+- `mirror_ubuntu_releases_rsync_path`: (O) server isos path. Default (releases)
 
 ### Other variables
-- `mirror_title`: (0) your title. Default (Your title)
-- `mirror_description`: (0) description. Default (Description)
-- `mirror_content_description`: (0) content description. Default (The repositories published here are free software)
-- `mirror_list`: (0) title. Default (Repository List)
-- `mirror_subtitle`: (0) title. Default (Problem report)
-- `mirror_foot`: (0) foot. Default (For any problem with this repository, inform admin@server.tls)
-- `mirror_repository_description`: (0) description repositories. Default (Repositories)
-- `mirror_iso_description`: (0) description isos. Default (Isos)
-- `mirror_telegram_token`: (0) token for communication of update errors. Default (null)
-- `mirror_telegram_chat_id`: (0) ID chat Telegram. Default (null)
+- `mirror_telegram_token`: (O) Telegram token for update errors communications. Default (null)
+- `mirror_telegram_chat_id`: (O) Telegram chat ID. Default (null)
 
 (O): Optional
 
 
-### Quick and dirty
+Quick and dirty
+---------------
 
 You should look at [defaults/main.yml](defaults/main.yml).
 
