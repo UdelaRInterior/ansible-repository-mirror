@@ -1,3 +1,8 @@
+This repository is now obsolete
+-------------------------------
+
+Development continues at [our Gitlab instance](https://git.interior.edu.uy/cielito/linuxmirror).
+
 Mirror Ansible role
 ============================
 
